@@ -57,6 +57,38 @@ Crate
 20201
 01111
 
+ConveyorUp
+#b9bcb9 #000000 #ffffff
+00000
+00200
+02110
+21111
+00000
+
+ConveyorDown
+#b9bcb9 #000000 #ffffff
+00000
+21111
+02110
+00200
+00000
+
+ConveyorLeft
+#b9bcb9 #000000 #ffffff
+00020
+00210
+02110
+00110
+00010
+
+ConveyorRight
+#b9bcb9 #000000 #ffffff
+02000
+01200
+01120
+01100
+01000
+
 LeftInactive
 #b9bcb9
 .....
@@ -137,6 +169,9 @@ XActive
 .0.0.
 .....
 
+WhoopsMessage
+transparent
+
 _Next
 transparent
 
@@ -158,8 +193,13 @@ d = Border and DownInactive
 l = Border and LeftInactive
 r = Border and RightInactive
 x = Border and XInactive
+& = Border and WhoopsMessage
 o = DoorLocked
 @ = DoorLocked and Player
+4 = ConveyorLeft
+6 = ConveyorRight
+8 = ConveyorUp
+2 = ConveyorDown
 
 Movable = Player or Crate
 
@@ -168,6 +208,8 @@ InputActive = UpActive or DownActive or LeftActive or RightActive or XActive
 Input = InputInactive or InputActive
 
 Door = DoorLocked or DoorOpen
+
+Conveyor = ConveyorUp or ConveyorDown or ConveyorLeft or ConveyorRight
 
 =======
 SOUNDS
@@ -178,11 +220,11 @@ COLLISIONLAYERS
 ================
 
 Background
-Water
-Door
+Water, Conveyor, Door
 Player, Wall, Crate, Border
 Input
 
+WhoopsMessage
 _Next
 
 _InvalidInput
@@ -192,7 +234,7 @@ RULES
 ======
 
 ((( Process Konami Code )))
-[ Player ] -> [ Player _InvalidInput ]
+[ moving Player ] -> [ moving Player _InvalidInput ]
 
 ( Advance code when given correct input )
 right [ right Player _InvalidInput ] [ _Next RightInactive | ] -> [ right Player ] [ RightActive | _Next ]
@@ -225,12 +267,21 @@ right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpAc
 
 [ action Player DoorOpen ] -> [ Player DoorOpen ] win
 
-[ >  Player | Crate ] -> [  >  Player | > Crate  ]
+[ action Player no DoorOpen ] [ DoorOpen ] [ WhoopsMessage ] -> [ Player ] [ DoorOpen ] [ ] message Did I say "just"? Whoops.
+
+[ Movable ConveyorUp ] -> [ up Movable ConveyorUp ]
+[ Movable ConveyorDown ] -> [ down Movable ConveyorDown ]
+[ Movable ConveyorLeft ] -> [ left Movable ConveyorLeft ]
+[ Movable ConveyorRight ] -> [ right Movable ConveyorRight ]
+
+[ > Crate | Player ] -> [ > Crate | > Player ]
+[ >  Player | Crate ] -> [ >  Player | > Crate ]
 
 (----------- late rules -----------)
 
 ( Drop movables in water )
 late [ Movable Water ] -> [ Water ]
+late [ Movable Conveyor ] -> [ Movable Conveyor ] again
 
 ==============
 WINCONDITIONS
@@ -266,7 +317,7 @@ message Just enter the Konami Code to beat each level.
 ~~.......~~
 ~~~~~~~~~~~
 ~~~~~~~~~~~
-%uuddlrlrx%
+%uuddlrlrx&
 
 ~~~~~~~~~~~
 ~~.......~~
@@ -278,6 +329,19 @@ message Just enter the Konami Code to beat each level.
 ~~.#..~~~~~
 ~~.###~~~~~
 ~~....~~~~~
+~~~~~~~~~~~
+%uuddlrlrx%
+
+~~~~~~~~~~~
+~.........~
+~.........~
+~.........~
+~....~....~
+~...6p....~
+~...*o4...~
+~..#.68...~
+~.........~
+~.........~
 ~~~~~~~~~~~
 %uuddlrlrx%
 
