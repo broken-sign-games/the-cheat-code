@@ -15,7 +15,7 @@ Wall
 black
 
 Player
-#d82800 #000000 #fcbcb0 #2038ec
+#983700 #000000 #fddbcf #4b30e3
 .000.
 .222.
 22111
@@ -37,7 +37,7 @@ Orange Yellow
 00000
 
 LeftInactive
-grey
+#b9bcb9
 .....
 ..0..
 .00..
@@ -45,7 +45,7 @@ grey
 .....
 
 LeftActive
-lightgreen
+#4b30e3
 .....
 ..0..
 .00..
@@ -53,7 +53,7 @@ lightgreen
 .....
 
 RightInactive
-grey
+#b9bcb9
 .....
 ..0..
 ..00.
@@ -61,7 +61,7 @@ grey
 .....
 
 RightActive
-lightgreen
+#4b30e3
 .....
 ..0..
 ..00.
@@ -69,7 +69,7 @@ lightgreen
 .....
 
 UpInactive
-grey
+#b9bcb9
 .....
 ..0..
 .000.
@@ -77,7 +77,7 @@ grey
 .....
 
 UpActive
-lightgreen
+#4b30e3
 .....
 ..0..
 .000.
@@ -85,7 +85,7 @@ lightgreen
 .....
 
 DownInactive
-grey
+#b9bcb9
 .....
 .....
 .000.
@@ -93,7 +93,7 @@ grey
 .....
 
 DownActive
-lightgreen
+#4b30e3
 .....
 .....
 .000.
@@ -101,7 +101,7 @@ lightgreen
 .....
 
 XInactive
-grey
+#b9bcb9
 .....
 .0.0.
 ..0..
@@ -109,7 +109,7 @@ grey
 .....
 
 XActive
-lightgreen
+#4b30e3
 .....
 .0.0.
 ..0..
