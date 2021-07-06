@@ -9,9 +9,25 @@ OBJECTS
 ========
 
 Background
-lightbrown
+#227700 #7bc211
+00000
+00010
+10000
+00000
+00100
 
 Wall
+#253200 #5e6400
+01000
+11111
+00010
+11111
+01000
+
+Water
+#1850c7
+
+Border
 black
 
 Player
@@ -23,18 +39,23 @@ Player
 .3.3.
 
 DoorLocked
-red
+#b9bcb9 #000000 #ffffff
+00120
+01200
+00120
+01200
+00120
 
 DoorOpen
 green
 
 Crate
-Orange Yellow
-00000
-0...0
-0...0
-0...0
-00000
+#b9bcb9 #000000 #ffffff
+22220
+20001
+20101
+20201
+01111
 
 LeftInactive
 #b9bcb9
@@ -128,15 +149,19 @@ LEGEND
 
 . = Background
 # = Wall
+% = Border
+~ = Water
 P = Player
 * = Crate
-u = Wall and UpInactive
-d = Wall and DownInactive
-l = Wall and LeftInactive
-r = Wall and RightInactive
-x = Wall and XInactive
+u = Border and UpInactive
+d = Border and DownInactive
+l = Border and LeftInactive
+r = Border and RightInactive
+x = Border and XInactive
 o = DoorLocked
 @ = DoorLocked and Player
+
+Movable = Player or Crate
 
 InputInactive = UpInactive or DownInactive or LeftInactive or RightInactive or XInactive
 InputActive = UpActive or DownActive or LeftActive or RightActive or XActive
@@ -153,8 +178,9 @@ COLLISIONLAYERS
 ================
 
 Background
+Water
 Door
-Player, Wall, Crate
+Player, Wall, Crate, Border
 Input
 
 _Next
@@ -187,6 +213,8 @@ right [ no Input | Input ] -> [ | Input _Next ]
 right [ _Next | ... | _Next ] -> [ | ... | _Next ]
 
 ( Process Up once more since that's always the first required input )
+
+(TODO: remain at the second ^ when up is pressed again)
 right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpActive | _Next ]
 
 [ _InvalidInput ] -> [ ]
@@ -199,6 +227,11 @@ right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpAc
 
 [ >  Player | Crate ] -> [  >  Player | > Crate  ]
 
+(----------- late rules -----------)
+
+( Drop movables in water )
+late [ Movable Water ] -> [ Water ]
+
 ==============
 WINCONDITIONS
 ==============
@@ -209,26 +242,57 @@ LEVELS
 
 message Just enter the Konami Code to beat each level.
 
-###########
-###########
-##.......##
-##.......##
-##.......##
-##...@...##
-##.......##
-##.......##
-##.......##
-###########
-#uuddlrlrx#
+~~~~~~~~~~~
+~~~~~~~~~~~
+~~.......~~
+~~.......~~
+~~.......~~
+~~...@...~~
+~~.......~~
+~~.......~~
+~~.......~~
+~~~~~~~~~~~
+~~~~~~~~~~~
+%uuddlrlrx%
 
+~~~~~~~~~~~
+~~~~~~~~~~~
+~~.......~~
+~~.####..~~
+~~.#..##.~~
+~~.#.@.#.~~
+~~.##..#.~~
+~~..####.~~
+~~.......~~
+~~~~~~~~~~~
+~~~~~~~~~~~
+%uuddlrlrx%
+
+~~~~~~~~~~~
+~~.......~~
+~~.####..~~
+~~.#..#..~~
+~~.#.*##.~~
+~~.#.po#.~~
+~~.#*.*#.~~
+~~.#..~~~~~
+~~.###~~~~~
+~~....~~~~~
+~~~~~~~~~~~
+%uuddlrlrx%
+
+
+( probably not )
+(
 ###########
-###########
-###########
-###########
-####..#####
-####.@.####
-#####..####
-###########
-###########
-###########
+##...#..o.#
+#..o#..#.##
+#.#..o.#o.#
+#.........#
+##o#op..#.#
+#..##.#.o.#
+#..#..o..##
+##..o....o#
+#o...#....#
 #uuddlrlrx#
+)
