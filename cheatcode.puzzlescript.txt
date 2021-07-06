@@ -1,0 +1,222 @@
+title The Cheat Code
+author Menderbug
+homepage menderbug.itch.io
+
+run_rules_on_level_start
+
+========
+OBJECTS
+========
+
+Background
+lightbrown
+
+Wall
+black
+
+Player
+#d82800 #000000 #fcbcb0 #2038ec
+.000.
+.222.
+22111
+.333.
+.3.3.
+
+DoorLocked
+red
+
+DoorOpen
+green
+
+Crate
+Orange Yellow
+00000
+0...0
+0...0
+0...0
+00000
+
+LeftInactive
+grey
+.....
+..0..
+.00..
+..0..
+.....
+
+LeftActive
+lightgreen
+.....
+..0..
+.00..
+..0..
+.....
+
+RightInactive
+grey
+.....
+..0..
+..00.
+..0..
+.....
+
+RightActive
+lightgreen
+.....
+..0..
+..00.
+..0..
+.....
+
+UpInactive
+grey
+.....
+..0..
+.000.
+.....
+.....
+
+UpActive
+lightgreen
+.....
+..0..
+.000.
+.....
+.....
+
+DownInactive
+grey
+.....
+.....
+.000.
+..0..
+.....
+
+DownActive
+lightgreen
+.....
+.....
+.000.
+..0..
+.....
+
+XInactive
+grey
+.....
+.0.0.
+..0..
+.0.0.
+.....
+
+XActive
+lightgreen
+.....
+.0.0.
+..0..
+.0.0.
+.....
+
+_Next
+transparent
+
+_InvalidInput
+pink
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+P = Player
+* = Crate
+u = Wall and UpInactive
+d = Wall and DownInactive
+l = Wall and LeftInactive
+r = Wall and RightInactive
+x = Wall and XInactive
+o = DoorLocked
+@ = DoorLocked and Player
+
+InputInactive = UpInactive or DownInactive or LeftInactive or RightInactive or XInactive
+InputActive = UpActive or DownActive or LeftActive or RightActive or XActive
+Input = InputInactive or InputActive
+
+Door = DoorLocked or DoorOpen
+
+=======
+SOUNDS
+=======
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Door
+Player, Wall, Crate
+Input
+
+_Next
+
+_InvalidInput
+
+======
+RULES
+======
+
+((( Process Konami Code )))
+[ Player ] -> [ Player _InvalidInput ]
+
+( Advance code when given correct input )
+right [ right Player _InvalidInput ] [ _Next RightInactive | ] -> [ right Player ] [ RightActive | _Next ]
+right [ left Player _InvalidInput ] [ _Next LeftInactive | ] -> [ left Player ] [ LeftActive | _Next ]
+right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpActive | _Next ]
+right [ down Player _InvalidInput ] [ _Next DownInactive | ] -> [ down Player ] [ DownActive | _Next ]
+right [ action Player _InvalidInput ] [ _Next XInactive | ] -> [ action Player ] [ XActive | _Next ]
+
+( Reset code otherwise )
+[ _InvalidInput ] [ _Next ] -> [ _InvalidInput ] [ ]
+[ _InvalidInput ] [ RightActive ] -> [ _InvalidInput ] [ RightInactive ]
+[ _InvalidInput ] [ LeftActive ] -> [ _InvalidInput ] [ LeftInactive ]
+[ _InvalidInput ] [ UpActive ] -> [ _InvalidInput ] [ UpInactive ]
+[ _InvalidInput ] [ DownActive ] -> [ _InvalidInput ] [ DownInactive ]
+[ _InvalidInput ] [ XActive ] -> [ _InvalidInput ] [ XInactive ]
+
+right [ no Input | Input ] -> [ | Input _Next ]
+right [ _Next | ... | _Next ] -> [ | ... | _Next ]
+
+( Process Up once more since that's always the first required input )
+right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpActive | _Next ]
+
+[ _InvalidInput ] -> [ ]
+
+( The door is open if we've reached or passed the X )
+[ Door ] -> [ DoorOpen ]
+[ Door ] [ XInactive no _Next ] -> [ DoorLocked ] [ XInactive ]
+
+[ action Player DoorOpen ] -> [ Player DoorOpen ] win
+
+[ >  Player | Crate ] -> [  >  Player | > Crate  ]
+
+==============
+WINCONDITIONS
+==============
+
+=======
+LEVELS
+=======
+
+message Just enter the Konami Code to beat each level.
+
+###########
+#.........#
+#.........#
+#.........#
+#.........#
+#....@....#
+#.........#
+#.........#
+#.........#
+#.........#
+#uuddlrlrx#
