@@ -435,6 +435,8 @@ LEVELS
 
 message Just enter the Konami Code to exit each level.
 
+message Level 1 of 5
+
 ~~~~~~~~~~~
 ~~~~~~~~~~~
 ~~.......~~
@@ -448,6 +450,8 @@ message Just enter the Konami Code to exit each level.
 ~~~~~~~~~~~
 %uuddlrlrx%
 
+message Level 2 of 5
+
 ~~~~~~~~~~~
 ~~~~~~~~~~~
 ~~.......~~
@@ -460,6 +464,8 @@ message Just enter the Konami Code to exit each level.
 ~~~~~~~~~~~
 ~~~~~~~~~~~
 %uuddlrlrx&
+
+message Level 3 of 5
 
 (
 
@@ -491,6 +497,8 @@ message Just enter the Konami Code to exit each level.
 ~~~~~~~~~~~
 %uuddlrlrx%
 
+message Level 4 of 5
+
 ~~~~~~~~~~~
 ~~~~~~~~~~~
 ~~.4.4.2.~~
@@ -504,6 +512,8 @@ message Just enter the Konami Code to exit each level.
 ~~~~~~~~~~~
 %uuddlrlrx%
 
+message Level 5 of 5
+
 ~~~~~~~~~~~
 ~~~~62~~~~~
 ~~..8..4.~~
@@ -516,6 +526,8 @@ message Just enter the Konami Code to exit each level.
 ~~~~~~~~~~~
 ~~~~~~~~~~~
 %uuddlrlrx%
+
+message Congrats? I'm pretty sure you cheated.
 
 ( probably not )
 (
