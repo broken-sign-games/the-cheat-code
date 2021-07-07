@@ -30,6 +30,38 @@ Wall
 Water
 #1850c7
 
+ShoreUp
+#68a6ff #ffffff
+00000
+.....
+.....
+.....
+.....
+
+ShoreDown
+#68a6ff #ffffff
+.....
+.....
+.....
+.....
+00000
+
+ShoreLeft
+#68a6ff #ffffff
+0....
+0....
+0....
+0....
+0....
+
+ShoreRight
+#68a6ff #ffffff
+....0
+....0
+....0
+....0
+....0
+
 Border
 black
 
@@ -227,6 +259,8 @@ Door = DoorLocked or DoorOpen
 
 Conveyor = ConveyorUp or ConveyorDown or ConveyorLeft or ConveyorRight
 
+Shore = ShoreUp or ShoreDown or ShoreLeft or ShoreRight
+
 =======
 SOUNDS
 =======
@@ -240,6 +274,10 @@ COLLISIONLAYERS
 Background
 ExitingPlayer
 Water, Conveyor, Door
+ShoreUp
+ShoreDown
+ShoreLeft
+ShoreRight
 Player, Wall, Crate, Border
 Input
 
@@ -251,6 +289,13 @@ _InvalidInput
 ======
 RULES
 ======
+
+( Decorations )
+up [ Water no ShoreUp | no Water no Border ] -> [ Water ShoreUp | ]
+down [ Water no ShoreDown | no Water no Border ] -> [ Water ShoreDown | ]
+left [ Water no ShoreLeft | no Water no Border ] -> [ Water ShoreLeft | ]
+right [ Water no ShoreRight | no Water no Border ] -> [ Water ShoreRight | ]
+
 
 ((( Process Konami Code )))
 [ moving Player ] -> [ moving Player _InvalidInput ]
