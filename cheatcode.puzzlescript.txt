@@ -269,10 +269,10 @@ right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpAc
 
 [ action Player no DoorOpen ] [ DoorOpen ] [ WhoopsMessage ] -> [ Player ] [ DoorOpen ] [ ] message Did I say "just"? Whoops.
 
-[ Movable ConveyorUp ] -> [ up Movable ConveyorUp ]
-[ Movable ConveyorDown ] -> [ down Movable ConveyorDown ]
-[ Movable ConveyorLeft ] -> [ left Movable ConveyorLeft ]
-[ Movable ConveyorRight ] -> [ right Movable ConveyorRight ]
+[ stationary Movable ConveyorUp ] -> [ up Movable ConveyorUp ]
+[ stationary Movable ConveyorDown ] -> [ down Movable ConveyorDown ]
+[ stationary Movable ConveyorLeft ] -> [ left Movable ConveyorLeft ]
+[ stationary Movable ConveyorRight ] -> [ right Movable ConveyorRight ]
 
 [ > Crate | Player ] -> [ > Crate | > Player ]
 [ >  Player | Crate ] -> [ >  Player | > Crate ]
@@ -361,6 +361,34 @@ message Just enter the Konami Code to beat each level.
 ~~~~~~~~~~~
 ~~~~~~~~~~~
 %uuddlrlrx%
+
+~~~~~~~~~~~
+~~~62~~~~~~
+~~~8..4~~~~
+~2*..@862~~
+~6..2...2~~
+~~~.688*4~~
+~~.*..868~~
+~~..~~~..~~
+~~.......~~
+~~~~~~~~~~~
+~~~~~~~~~~~
+%uuddlrlrx%
+
+~~~~~~~~~~~
+~~~~62~~~~~
+~~..8..4~~~
+~..*..o862~
+~.6.82...2~
+~.~.~688*4~
+~..8...868~
+~..*~~.~..~
+~~~...p..~~
+~~~~~~~~~~~
+~~~~~~~~~~~
+%uuddlrlrx%
+
+
 
 
 ( probably not )
