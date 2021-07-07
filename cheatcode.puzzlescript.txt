@@ -20,7 +20,7 @@ Background
 00100
 
 Wall
-#253200 #5e6400
+#7f4c00 #3d1c00
 01000
 11111
 00010
@@ -157,7 +157,7 @@ Crate
 01111
 
 ConveyorUp
-#b9bcb9 #000000 #ffffff
+#4f1000 #983700 #e58d68
 00000
 00200
 02110
@@ -165,7 +165,7 @@ ConveyorUp
 00000
 
 ConveyorDown
-#b9bcb9 #000000 #ffffff
+#4f1000 #983700 #e58d68
 00000
 21111
 02110
@@ -173,7 +173,7 @@ ConveyorDown
 00000
 
 ConveyorLeft
-#b9bcb9 #000000 #ffffff
+#4f1000 #983700 #e58d68
 00020
 00210
 02110
@@ -181,7 +181,7 @@ ConveyorLeft
 00010
 
 ConveyorRight
-#b9bcb9 #000000 #ffffff
+#4f1000 #983700 #e58d68
 02000
 01200
 01120
