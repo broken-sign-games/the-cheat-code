@@ -320,7 +320,13 @@ Splash = Splash1 or Splash2 or Splash3 or Splash4
 SOUNDS
 =======
 
-endlevel 76729903
+endlevel 43684703
+
+Player move 88484707
+Crate move 98514307
+
+DoorOpening create 20122308
+DoorClosing create 20122308
 
 Splash1 create 65311309 (30591509)
 
