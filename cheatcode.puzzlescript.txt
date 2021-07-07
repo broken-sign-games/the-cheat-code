@@ -1,6 +1,7 @@
 title The Cheat Code
 author Menderbug
 homepage menderbug.itch.io
+text_color #b9bcb9
 
 verbose_logging
 
@@ -57,7 +58,12 @@ DoorLocked
 00120
 
 DoorOpen
-#b3af0c
+#b9bcb9 #000000 #ffffff #b3af0c
+13333
+33332
+13333
+33332
+13333
 
 Crate
 #b9bcb9 #000000 #ffffff
