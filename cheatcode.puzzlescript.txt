@@ -2,6 +2,8 @@ title The Cheat Code
 author Menderbug
 homepage menderbug.itch.io
 
+verbose_logging
+
 run_rules_on_level_start
 
 ========
@@ -31,6 +33,14 @@ Border
 black
 
 Player
+#983700 #000000 #fddbcf #4b30e3
+.000.
+.222.
+22111
+.333.
+.3.3.
+
+ExitingPlayer
 #983700 #000000 #fddbcf #4b30e3
 .000.
 .222.
@@ -215,11 +225,14 @@ Conveyor = ConveyorUp or ConveyorDown or ConveyorLeft or ConveyorRight
 SOUNDS
 =======
 
+endlevel 76729903
+
 ================
 COLLISIONLAYERS
 ================
 
 Background
+ExitingPlayer
 Water, Conveyor, Door
 Player, Wall, Crate, Border
 Input
@@ -242,6 +255,8 @@ right [ left Player _InvalidInput ] [ _Next LeftInactive | ] -> [ left Player ] 
 right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpActive | _Next ]
 right [ down Player _InvalidInput ] [ _Next DownInactive | ] -> [ down Player ] [ DownActive | _Next ]
 right [ action Player _InvalidInput ] [ _Next XInactive | ] -> [ action Player ] [ XActive | _Next ]
+( Also accept an Up without advancing when we're on the second active up )
+right [ up Player _InvalidInput ] [ UpActive | _Next DownInactive ] -> [ up Player ] [ UpActive | _Next DownInactive ]
 
 ( Reset code otherwise )
 [ _InvalidInput ] [ _Next ] -> [ _InvalidInput ] [ ]
@@ -255,9 +270,7 @@ right [ no Input | Input ] -> [ | Input _Next ]
 right [ _Next | ... | _Next ] -> [ | ... | _Next ]
 
 ( Process Up once more since that's always the first required input )
-
-(TODO: remain at the second ^ when up is pressed again)
-right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpActive | _Next ]
+right [ up Player _InvalidInput ] [ no Input | _Next UpInactive | ] -> [ up Player _InvalidInput ] [ | UpActive | _Next ]
 
 [ _InvalidInput ] -> [ ]
 
@@ -265,9 +278,10 @@ right [ up Player _InvalidInput ] [ _Next UpInactive | ] -> [ up Player ] [ UpAc
 [ Door ] -> [ DoorOpen ]
 [ Door ] [ XInactive no _Next ] -> [ DoorLocked ] [ XInactive ]
 
-[ action Player DoorOpen ] -> [ Player DoorOpen ] win
+[ action Player DoorOpen ] -> [ ExitingPlayer DoorLocked ] win
 
-[ action Player no DoorOpen ] [ DoorOpen ] [ WhoopsMessage ] -> [ Player ] [ DoorOpen ] [ ] message Did I say "just"? Whoops.
+[ action Player ] [ DoorOpen ] [ WhoopsMessage ] -> [ Player ] [ DoorLocked ] [ ] message Did I say "just"? Whoops.
+[ action Player ] [ DoorOpen ] -> [ Player ] [ DoorLocked ]
 
 [ stationary Movable ConveyorUp ] -> [ up Movable ConveyorUp ]
 [ stationary Movable ConveyorDown ] -> [ down Movable ConveyorDown ]
@@ -291,7 +305,7 @@ WINCONDITIONS
 LEVELS
 =======
 
-message Just enter the Konami Code to beat each level.
+message Just enter the Konami Code to exit each level.
 
 ~~~~~~~~~~~
 ~~~~~~~~~~~
@@ -363,27 +377,14 @@ message Just enter the Konami Code to beat each level.
 %uuddlrlrx%
 
 ~~~~~~~~~~~
-~~~62~~~~~~
-~~~8..4~~~~
-~2*..@862~~
-~6..2...2~~
-~~~.688*4~~
-~~.*..868~~
-~~..~~~..~~
-~~.......~~
-~~~~~~~~~~~
-~~~~~~~~~~~
-%uuddlrlrx%
-
-~~~~~~~~~~~
 ~~~~62~~~~~
-~~..8..4~~~
+~~..8..4.~~
 ~..*..o862~
 ~.6.82...2~
 ~.~.~688*4~
 ~..8...868~
 ~..*~~.~..~
-~~~...p..~~
+~~....p..~~
 ~~~~~~~~~~~
 ~~~~~~~~~~~
 %uuddlrlrx%
