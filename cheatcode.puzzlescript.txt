@@ -319,6 +319,8 @@ message Just enter the Konami Code to beat each level.
 ~~~~~~~~~~~
 %uuddlrlrx&
 
+(
+
 ~~~~~~~~~~~
 ~~.......~~
 ~~.####..~~
@@ -331,6 +333,8 @@ message Just enter the Konami Code to beat each level.
 ~~....~~~~~
 ~~~~~~~~~~~
 %uuddlrlrx%
+
+)
 
 ~~~~~~~~~~~
 ~.######.~~
