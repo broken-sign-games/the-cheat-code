@@ -122,12 +122,31 @@ DoorLocked
 00120
 
 DoorOpen
-#b9bcb9 #000000 #ffffff #b3af0c
-13333
-33332
-13333
-33332
-13333
+#b9bcb9 #000000 #ffffff
+1....
+....2
+1....
+....2
+1....
+
+DoorOpening
+#b9bcb9 #000000 #ffffff
+01..2
+1..20
+01..2
+1..20
+01..2
+
+DoorClosing
+#b9bcb9 #000000 #ffffff
+01..2
+1..20
+01..2
+1..20
+01..2
+
+DoorBackground
+#4a4d4a
 
 Crate
 #b9bcb9 #000000 #ffffff
@@ -258,6 +277,9 @@ transparent
 _InvalidInput
 pink
 
+_DoorChanged
+pink
+
 =======
 LEGEND
 =======
@@ -287,7 +309,7 @@ InputInactive = UpInactive or DownInactive or LeftInactive or RightInactive or X
 InputActive = UpActive or DownActive or LeftActive or RightActive or XActive
 Input = InputInactive or InputActive
 
-Door = DoorLocked or DoorOpen
+Door = DoorLocked or DoorOpen or DoorOpening or DoorClosing
 
 Conveyor = ConveyorUp or ConveyorDown or ConveyorLeft or ConveyorRight
 
@@ -307,6 +329,7 @@ COLLISIONLAYERS
 ================
 
 Background
+DoorBackground
 ExitingPlayer
 Water, Conveyor, Door
 ShoreUp
@@ -320,6 +343,7 @@ Input
 WhoopsMessage
 _Next
 
+_DoorChanged
 _InvalidInput
 
 ======
@@ -327,11 +351,14 @@ RULES
 ======
 
 ( Decorations )
+[ Door ] -> [ Door DoorBackground ]
 up [ Water no ShoreUp | no Water no Border ] -> [ Water ShoreUp | ]
 down [ Water no ShoreDown | no Water no Border ] -> [ Water ShoreDown | ]
 left [ Water no ShoreLeft | no Water no Border ] -> [ Water ShoreLeft | ]
 right [ Water no ShoreRight | no Water no Border ] -> [ Water ShoreRight | ]
 
+( Message in level 2 )
+[ DoorLocked ] [ Player WhoopsMessage ] -> [ DoorLocked ] [ Player ] message Did I say "just"? Whoops.
 
 ((( Process Konami Code )))
 [ moving Player ] -> [ moving Player _InvalidInput ]
@@ -361,22 +388,16 @@ right [ up Player _InvalidInput ] [ no Input | _Next UpInactive | ] -> [ up Play
 
 [ _InvalidInput ] -> [ ]
 
-( The door is open if we've reached or passed the X )
-[ Door ] -> [ DoorOpen ]
-[ Door ] [ XInactive no _Next ] -> [ DoorLocked ] [ XInactive ]
-
-[ action Player DoorOpen ] -> [ ExitingPlayer DoorLocked ] win
-
-[ action Player ] [ DoorOpen ] [ WhoopsMessage ] -> [ Player ] [ DoorLocked ] [ ] message Did I say "just"? Whoops.
-[ action Player ] [ DoorOpen ] -> [ Player ] [ DoorLocked ]
+( Process player trying to exit )
+[ action Player DoorOpen ] -> [ ExitingPlayer DoorOpen ]
 
 [ stationary Movable ConveyorUp ] -> [ up Movable ConveyorUp ]
 [ stationary Movable ConveyorDown ] -> [ down Movable ConveyorDown ]
 [ stationary Movable ConveyorLeft ] -> [ left Movable ConveyorLeft ]
 [ stationary Movable ConveyorRight ] -> [ right Movable ConveyorRight ]
 
+[ > Player | Crate ] -> [ > Player | > Crate ]
 [ > Crate | Player ] -> [ > Crate | > Player ]
-[ >  Player | Crate ] -> [ >  Player | > Crate ]
 
 (----------- late rules -----------)
 
@@ -390,9 +411,23 @@ late [ Movable Water ] -> [ Water Splash1 ] again
 ( Conveyors )
 late [ Movable Conveyor ] -> [ Movable Conveyor ] again
 
+( Door )
+late [ DoorOpen ] -> [ DoorClosing _DoorChanged ] again
+( The door opens when we reach the X )
+late [ DoorLocked ] [ XInactive _Next ] -> [ DoorOpening _DoorChanged ] [ XInactive _Next ] again
+ 
+late [ DoorClosing no _DoorChanged ] -> [ DoorLocked _DoorChanged ]
+late [ DoorOpening no _DoorChanged ] -> [ DoorOpen _DoorChanged ]
+( This is for displaying the message in level 2 )
+late [ DoorLocked _DoorChanged ] [ Player no WhoopsMessage ] [ WhoopsMessage ] -> [ DoorLocked _DoorChanged ] [ Player WhoopsMessage ] [ ] again
+
+late [ _DoorChanged ] -> [ ]
+
 ==============
 WINCONDITIONS
 ==============
+
+some ExitingPlayer on DoorLocked
 
 =======
 LEVELS
@@ -481,9 +516,6 @@ message Just enter the Konami Code to exit each level.
 ~~~~~~~~~~~
 ~~~~~~~~~~~
 %uuddlrlrx%
-
-
-
 
 ( probably not )
 (
