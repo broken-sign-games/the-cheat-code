@@ -282,6 +282,9 @@ pink
 _DoorChanged
 pink
 
+_HadInput
+pink
+
 =======
 LEGEND
 =======
@@ -353,10 +356,13 @@ _Next
 
 _DoorChanged
 _InvalidInput
+_HadInput
 
 ======
 RULES
 ======
+
+[ moving Player ] -> [ moving Player _HadInput ]
 
 ( Decorations )
 [ Door ] -> [ Door DoorBackground ]
@@ -420,7 +426,7 @@ late [ Movable Water ] -> [ Water Splash1 ] again
 late [ Movable Conveyor ] -> [ Movable Conveyor ] again
 
 ( Door )
-late [ DoorOpen ] -> [ DoorClosing _DoorChanged ] again
+late [ DoorOpen ] [ _HadInput ] -> [ DoorClosing _DoorChanged ] [ ] again
 ( The door opens when we reach the X )
 late [ DoorLocked ] [ XInactive _Next ] -> [ DoorOpening _DoorChanged ] [ XInactive _Next ] again
  
@@ -430,6 +436,7 @@ late [ DoorOpening no _DoorChanged ] -> [ DoorOpen _DoorChanged ]
 late [ DoorLocked _DoorChanged ] [ Player no WhoopsMessage ] [ WhoopsMessage ] -> [ DoorLocked _DoorChanged ] [ Player WhoopsMessage ] [ ] again
 
 late [ _DoorChanged ] -> [ ]
+late [ _HadInput ] -> [ ]
 
 ==============
 WINCONDITIONS
