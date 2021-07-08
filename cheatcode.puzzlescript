@@ -7,6 +7,8 @@ verbose_logging
 
 run_rules_on_level_start
 
+key_repeat_interval 0.3
+
 ========
 OBJECTS
 ========
